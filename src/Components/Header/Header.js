@@ -1,13 +1,15 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const Header = () => {
     return (
         <nav>
             <div className="nav-wrapper #004d40 teal darken-3">
-                <a href="#" className="brand-logo">Vending Machine</a>
+                <Link to="/" className="brand-logo">Vending Machine Desktop</Link>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
-                    <li><a href="editing">Controls</a></li>
-                    <li><a href="/staticstic">Statistic</a></li>
+                    <li><Link to={'/'}> List </Link></li>
+                    <li><Link to={'/editing'}> Controls </Link></li>
+                    <li><Link to={'/statistic'}> Statistic</Link></li>
                 </ul>
             </div>
         </nav>
