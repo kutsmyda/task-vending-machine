@@ -5,8 +5,8 @@ const Footer = () => {
         <footer className="page-footer #004d40 teal darken-4">
             <div className="footer-copyright">
                 <div className="container">
-                    © 2014 Copyright Text
-                    <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
+                    © {new Date().getFullYear()}
+                    <a className="grey-text text-lighten-4 right" href="https://github.com/kutsmyda/task-vending-machine">Project on GitHub</a>
                 </div>
             </div>
         </footer>

@@ -7,7 +7,7 @@ const BaseLayout = (props) => {
     return (
         <div className={styles.BaseLayout}>
             <header><Header/></header>
-            <main>
+            <main style={{minHeight : '550px'}}>
                 {props.children}
             </main>
             <footer><Footer/></footer>
