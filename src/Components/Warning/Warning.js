@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './Warning.module.css'
+import './Warning.css'
 
 const Warning = ({className, text}) => {
-    const cls = [styles.Warning, className]
-    return (
-        <div className={cls.join('')}>
 
+    return (
+        <div className={ `${className}`}>
+            {text}
         </div>
     );
 };

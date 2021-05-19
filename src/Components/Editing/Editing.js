@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Editing.module.css'
 import Input from "../UI/Input";
 import {useDispatch, useSelector} from "react-redux";
 import {addCategory} from "../../redux/action-creators";
+import Warning from "../Warning/Warning";
 
 
 const Editing = () => {
@@ -11,7 +12,7 @@ const Editing = () => {
     const dispatch = useDispatch()
     const categoriesList = useSelector(({categoriesListReducer}) => categoriesListReducer.categoriesList);
 
-    const [warning, setWarning] = useState({addCategory: false, addItem: false, clear: false});
+    const [danger, setDanger] = useState({addCategory: false, addItem: false, clear: false});
     const [success, setSuccess] = useState({addCategory: false, addItem: false, clear: false});
     const [inputNameValue, setInputNameValue] = useState({});
 
@@ -33,16 +34,37 @@ const Editing = () => {
         }
         if ((categoriesList.find((category) => category.name === payload.name)) === undefined && !!payload.name) {
             dispatch(addCategory(payload))
+
+            setDanger({...danger, addCategory: false})
+            setSuccess({...success, addCategory: true})
+        }else {
+            setDanger({...danger, addCategory: true})
+            setSuccess({...success, addCategory: false})
         }
 
 
     }
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setSuccess({...success, addCategory: false, addItem: false})
+            setDanger({...success, addCategory: false, addItem: false})
+        },7000)
+    }, [success, danger])
+
 
 
     return (
         <div className={styles.Editing}>
 
             {/*///////////////////////////////////Add category//////////////////////////////////*/}
+
+            <div style={{position : 'absolute'}} >
+                {success.addCategory ? <Warning className={'success'} text={'category added'}/> : null}
+                {danger.addCategory ? <Warning className={'danger'} text={'This category has already been existed'}/> : null}
+            </div >
+
+
 
             <div className={styles.wrap}>
                 <div>
@@ -60,6 +82,8 @@ const Editing = () => {
                 </div>
 
             </div>
+
+
 
 
             {/*///////////////////////////////////Add item//////////////////////////////////*/}
