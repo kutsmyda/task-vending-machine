@@ -1,0 +1,17 @@
+.Warning {
+    text-align: center;
+    width: 90%;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.success  {
+    background : #b2dfdb;
+    color: #004d40;
+
+}
+
+.danger {
+    background: #ffab91;
+    color: #bf360c ;
+}

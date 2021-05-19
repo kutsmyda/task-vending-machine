@@ -1,4 +1,5 @@
 import './App.css';
+import ReactDOM from 'react-dom'
 import {Link, Route, Switch} from 'react-router-dom';
 
 import BaseLayout from "./Components/BaseLayout/BaseLayout";
