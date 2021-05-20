@@ -1,24 +1,23 @@
 import React, {useState} from 'react';
 import styles from './Editing.module.css'
-import Input from "../UI/Input";
+import Input from "../UI/Input/Input";
 import {useDispatch, useSelector} from "react-redux";
 import {addCategory, addItem, clearCategory} from "../../redux/action-creators";
-import Options from "../UI/Options";
+import Options from "../UI/Options/Options";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
-
+toast.configure()
 const Editing = () => {
 
 
     const dispatch = useDispatch()
     const categoriesList = useSelector(({categoriesListReducer}) => categoriesListReducer.categoriesList);
 
-    const [danger, setDanger] = useState({addCategory: false, addItem: false, clear: false});
-    const [success, setSuccess] = useState({addCategory: false, addItem: false, clear: false});
     const [inputNameValue, setInputNameValue] = useState({});
     const [inputCount, setInputCount] = useState(0);
     const [isDisabled, setIsDisabled] = useState(false)
-    const [inputSelectName,setInputSelectName] = useState('')
-
+    const [inputSelectName, setInputSelectName] = useState('')
 
 
     const handleOnChange = (e) => {
@@ -29,19 +28,19 @@ const Editing = () => {
     }
 
     const onInputCountValue = (e) => {
-        if (+e.target.value >=0){
-           return  setInputCount(+e.target.value)
+        if (+e.target.value >= 0) {
+            return setInputCount(+e.target.value)
         }
-        return  setInputCount(+0)
+        return setInputCount(+0)
     }
 
     const onSelectChange = (e) => {
-        const category = categoriesList.find((category)=> category.name === e.target.value)
+        const category = categoriesList.find((category) => category.name === e.target.value)
         if (!!category) {
             setInputCount(category.count)
             setInputSelectName(category.name)
-        }else
-         setIsDisabled(true)
+        } else
+            setIsDisabled(true)
     }
 
     const handleAddCategory = () => {
@@ -53,26 +52,26 @@ const Editing = () => {
         }
         if ((categoriesList.find((category) => category.name === payload.name)) === undefined && !!payload.name) {
             dispatch(addCategory(payload))
+            toast.success('Category add. Go to Lisi if you want to see it')
 
-            setDanger({...danger, addCategory: false})
-            setSuccess({...success, addCategory: true})
         } else {
-            setDanger({...danger, addCategory: true})
-            setSuccess({...success, addCategory: false})
+            toast.warning('Category already had been exist')
         }
-
-
     }
+
+
+    ////////////////////Button Handle to REDUX////////////////////////////
     const handleAddItem = () => {
         dispatch(addItem({inputCount, inputSelectName}))
+        toast.success('Successfully')
     }
-
-
-
 
     const handleClearCategory = () => {
         dispatch(clearCategory())
     }
+
+    ////////////////////Button Handle to REDUX////////////////////////////
+
 
     return (
         <div className={styles.Editing}>
@@ -80,11 +79,9 @@ const Editing = () => {
             {/*///////////////////////////////////Add category//////////////////////////////////*/}
 
 
-
-
             <div className={styles.wrap}>
                 <div>
-                    <h5>Add category</h5>
+                    <h5 className='alignCenter'>Add category</h5>
 
                 </div>
                 <div>
@@ -94,7 +91,10 @@ const Editing = () => {
                 </div>
 
                 <div className={styles.pdTop}>
-                    <button className='btn' onClick={handleAddCategory}>ADD</button>
+                    <button className='btn'
+                            onClick={handleAddCategory}
+                    >ADD
+                    </button>
                 </div>
 
             </div>
@@ -105,28 +105,37 @@ const Editing = () => {
 
             <div className={styles.wrap}>
                 <div>
-                    <h5>Add item</h5>
+                    <h5 className='alignCenter'>Add item</h5>
                 </div>
                 <div>
-                        <Options categoriesList={categoriesList} headerSelect={'Choose category :'} onSelectChange={onSelectChange}/>
+                    <Options categoriesList={categoriesList}
+                             headerSelect={'Choose category :'}
+                             onSelectChange={onSelectChange}
+                    />
 
                 </div>
 
 
-
                 <div>
-                    <Input name={'Count :'} type={'number'} onInput={onInputCountValue}  value={inputCount} disabled={isDisabled}/>
+                    <Input name={'Count :'}
+                           type={'number'}
+                           onInput={onInputCountValue}
+                           value={inputCount}
+                           disabled={isDisabled}/>
 
                 </div>
                 <div>
-                    <button  className='btn' onClick={handleAddItem}>Save</button>
+                    <button className='btn'
+                            onClick={handleAddItem}
+                    >Save
+                    </button>
                 </div>
             </div>
 
 
             <div className={styles.wrap}>
                 <div>
-                    <h5>Clear</h5>
+                    <h5 className='alignCenter'>Clear</h5>
 
                 </div>
                 <div>
@@ -134,7 +143,10 @@ const Editing = () => {
 
                 </div>
                 <div>
-                    <button onClick={handleClearCategory} className='btn'>Clear</button>
+                    <button onClick={handleClearCategory}
+                            className='btn'
+                    >Clear
+                    </button>
                 </div>
             </div>
         </div>

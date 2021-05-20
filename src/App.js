@@ -6,6 +6,7 @@ import BaseLayout from "./Components/BaseLayout/BaseLayout";
 import CategoryList from "./Components/pages/categoryList/categoryList";
 import Controls from "./Components/pages/controls/Controls";
 import Statistic from "./Components/pages/statistic/Statistic";
+import PageNotFound from "./Components/PageNotFound/PageNotFound";
 
 function App() {
 
@@ -16,8 +17,9 @@ function App() {
                 <div className={'body'}>
                     <Switch>
                         <Route exact path='/' component={CategoryList}/>
-                        <Route path={'/editing'} render={() => <Controls/>}/>
-                        <Route path={'/statistic'} render={() => <Statistic/>}/>
+                        <Route path={'/editing'} component={Controls}/>
+                        <Route path={'/statistic'} component={Statistic}/>
+                        <Route render={()=> <PageNotFound/>}/>
                     </Switch>
                 </div>
             </BaseLayout>

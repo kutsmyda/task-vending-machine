@@ -3,13 +3,8 @@ import {currentDate} from "../../utilits/CurrentDay";
 
 
 const initialState = {
-    categoriesList: [{id: 2, name: 'wtf', price: 22.50, count: 55}],
-    statisticsList: [{
-        name: 'YES',
-        date: currentDate.getAllDataDate(),
-        count: 1,
-        price: 200
-    }]
+    categoriesList: [],
+    statisticsList: []
 }
 const categoryListReducer = (state = initialState, action) => {
 
@@ -52,11 +47,8 @@ const categoryListReducer = (state = initialState, action) => {
                             price: category.price
                         })
                     }
-
-
                 }
                 return category
-
             })
             return {...state, categoriesList: newCategoryList}
         }

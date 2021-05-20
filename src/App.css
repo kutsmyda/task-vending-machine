@@ -4,3 +4,17 @@
     align-items: center;
     flex-direction: column;
 }
+
+.alignCenter {
+    text-align: center;
+}
+
+.butt {
+    border-radius: 15px;
+    margin: 10px;
+}
+
+
+.mgTop{
+    margin-top: 50px;
+}

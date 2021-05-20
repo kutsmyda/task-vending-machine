@@ -15,7 +15,6 @@ const CategoryList = () => {
                 ? <CategoriesList/>
                 : <EmptyList/>
             }
-            hello from categorylist
         </div>
     );
 };

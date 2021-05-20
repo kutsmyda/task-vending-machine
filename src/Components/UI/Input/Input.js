@@ -1,10 +1,11 @@
 import React from 'react';
+import styles from './Input.module.css'
 
 const Input = ({name, type, text = '', placeholder = '', onChange = Function.prototype, value='', onInput = Function.prototype , disabled=false, max, min=0}) => {
     return (
         <div className="row">
             <div className="input-field col s12">
-                <label>{name}
+                <label className={styles.label}>{name}
                     <input
                         disabled={disabled}
                         name={`${name}`}
@@ -19,7 +20,6 @@ const Input = ({name, type, text = '', placeholder = '', onChange = Function.pro
                         step={1}
                     />
                 </label>
-                <span className="helper-text" data-error="wrong" data-success="right">{`${text}`}</span>
             </div>
         </div>
     );
