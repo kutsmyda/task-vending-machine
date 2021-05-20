@@ -1,4 +1,4 @@
-import {ADD_ITEM, ADD_CATEGORY, CLEAR_ALL_CATEGORY, PURCHASE} from '../action-types';
+import {ADD_ITEM, ADD_CATEGORY, CLEAR_ALL_CATEGORY, PURCHASE_ITEM} from '../action-types';
 import {currentDate} from "../../utilits/CurrentDay";
 
 
@@ -27,11 +27,13 @@ const categoryListReducer = (state = initialState, action) => {
         }
 
         case ADD_CATEGORY: {
-            return {...state, categoriesList: [...state.categoriesList, action.payload]};
+
+            const newList = [...state.categoriesList,action.payload].sort((a,b)=>a.count - b.count)
+            return {...state, categoriesList: newList}
 
         }
 
-        case PURCHASE: {
+        case PURCHASE_ITEM: {
             let newStatiscticsList = state.statisticsList
             let newCategoryList = state.categoriesList.map((category) => {
                 if (category.name === action.payload.name) {

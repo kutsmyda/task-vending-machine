@@ -16,7 +16,7 @@ const CategoriesList = () => {
 
     return (
         <div>
-            {categoriesList
+            {categoriesList.length
                     ? categoriesList.map((category, id) => <CategoriesListItem
                         category={category}
                         key={id}
