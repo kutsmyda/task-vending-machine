@@ -1,9 +1,10 @@
 import React from 'react';
+import Statistics from "../../Statistics/Statistics";
 
 const Statistic = () => {
     return (
         <div>
-            hello from statistic
+            <Statistics/>
         </div>
     );
 };

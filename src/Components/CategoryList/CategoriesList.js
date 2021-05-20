@@ -3,7 +3,6 @@ import CategoriesListItem from "./CategoriesListItem/CategoriesListItem";
 import {useDispatch, useSelector} from "react-redux";
 import {purchaseItem} from "../../redux/action-creators";
 import Preloader from "../Preloader/Preloader";
-import EmptyList from "../EmptyList/EmptyList";
 
 const CategoriesList = () => {
 

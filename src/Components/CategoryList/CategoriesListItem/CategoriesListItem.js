@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoriesListItem = ({category, onClickBuy}) => {
+const CategoriesListItem = ({category, handleClickBuy}) => {
     return (
         <div>
             <div className="row">
@@ -14,9 +14,9 @@ const CategoriesListItem = ({category, onClickBuy}) => {
                         <div className="card-action">
                             <button
                                 className={'btn'}
-                                onClick={() => onClickBuy(category)}
+                                onClick={() => handleClickBuy(category)}
                                 disabled={category.count <= 0}
-                            >Buy
+                            >Buy 1 Snack
                             </button>
                         </div>
                     </div>

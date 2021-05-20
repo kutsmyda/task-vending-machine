@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './Editing.module.css'
 import Input from "../UI/Input";
 import {useDispatch, useSelector} from "react-redux";
-import {addCategory} from "../../redux/action-creators";
-import Warning from "../Warning/Warning";
+import {addCategory, addItem, clearCategory} from "../../redux/action-creators";
+import Options from "../UI/Options";
 
 
 const Editing = () => {
@@ -15,6 +15,10 @@ const Editing = () => {
     const [danger, setDanger] = useState({addCategory: false, addItem: false, clear: false});
     const [success, setSuccess] = useState({addCategory: false, addItem: false, clear: false});
     const [inputNameValue, setInputNameValue] = useState({});
+    const [inputCount, setInputCount] = useState(0);
+    const [isDisabled, setIsDisabled] = useState(false)
+    const [inputSelectName,setInputSelectName] = useState('')
+
 
 
     const handleOnChange = (e) => {
@@ -24,6 +28,21 @@ const Editing = () => {
         })
     }
 
+    const onInputCountValue = (e) => {
+        if (+e.target.value >=0){
+           return  setInputCount(+e.target.value)
+        }
+        return  setInputCount(+0)
+    }
+
+    const onSelectChange = (e) => {
+        const category = categoriesList.find((category)=> category.name === e.target.value)
+        if (!!category) {
+            setInputCount(category.count)
+            setInputSelectName(category.name)
+        }else
+         setIsDisabled(true)
+    }
 
     const handleAddCategory = () => {
         let payload = {};
@@ -37,32 +56,29 @@ const Editing = () => {
 
             setDanger({...danger, addCategory: false})
             setSuccess({...success, addCategory: true})
-        }else {
+        } else {
             setDanger({...danger, addCategory: true})
             setSuccess({...success, addCategory: false})
         }
 
 
     }
-
-    useEffect(()=>{
-        setTimeout(()=>{
-            setSuccess({...success, addCategory: false, addItem: false})
-            setDanger({...success, addCategory: false, addItem: false})
-        },7000)
-    }, [success, danger])
+    const handleAddItem = () => {
+        dispatch(addItem({inputCount, inputSelectName}))
+    }
 
 
+
+
+    const handleClearCategory = () => {
+        dispatch(clearCategory())
+    }
 
     return (
         <div className={styles.Editing}>
 
             {/*///////////////////////////////////Add category//////////////////////////////////*/}
 
-            <div style={{position : 'absolute'}} >
-                {success.addCategory ? <Warning className={'success'} text={'category added'}/> : null}
-                {danger.addCategory ? <Warning className={'danger'} text={'This category has already been existed'}/> : null}
-            </div >
 
 
 
@@ -72,9 +88,9 @@ const Editing = () => {
 
                 </div>
                 <div>
-                    <Input name={'name'} type={'text'} onChange={handleOnChange}/>
-                    <Input name={'price'} type={'number'} onChange={handleOnChange}/>
-                    <Input name={'count'} type={'number'} onChange={handleOnChange}/>
+                    <Input name={'name'} type={'text'} onChange={handleOnChange} value={inputNameValue.name}/>
+                    <Input name={'price'} type={'number'} onChange={handleOnChange} value={inputNameValue.price}/>
+                    <Input name={'count'} type={'number'} onChange={handleOnChange} value={inputNameValue.count}/>
                 </div>
 
                 <div className={styles.pdTop}>
@@ -82,8 +98,6 @@ const Editing = () => {
                 </div>
 
             </div>
-
-
 
 
             {/*///////////////////////////////////Add item//////////////////////////////////*/}
@@ -94,20 +108,18 @@ const Editing = () => {
                     <h5>Add item</h5>
                 </div>
                 <div>
-                    <select name='item' className="browser-default">
-                        <option value='1' selected disabled>Choose your category</option>
-                        <option value='2'>fs</option>
-                        <option value='3'>fdw</option>
-                        <option value='4'>qwe</option>
-                    </select>
+                        <Options categoriesList={categoriesList} headerSelect={'Choose category :'} onSelectChange={onSelectChange}/>
+
                 </div>
+
+
+
                 <div>
-                    <Input name={'Count'} type={'number'}/>
+                    <Input name={'Count :'} type={'number'} onInput={onInputCountValue}  value={inputCount} disabled={isDisabled}/>
 
                 </div>
                 <div>
-                    <button className='btn'>Save</button>
-
+                    <button  className='btn' onClick={handleAddItem}>Save</button>
                 </div>
             </div>
 
@@ -122,7 +134,7 @@ const Editing = () => {
 
                 </div>
                 <div>
-                    <button className='btn'>Clear</button>
+                    <button onClick={handleClearCategory} className='btn'>Clear</button>
                 </div>
             </div>
         </div>
